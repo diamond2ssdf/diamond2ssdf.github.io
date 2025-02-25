@@ -13,14 +13,16 @@
       
       <categories>
           
-          <category> 默认分类 </category>
+          <category> 中间件 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 默认标签 </tag>
+            <tag> MySQL </tag>
+            
+            <tag> MySQL锁 </tag>
             
         </tags>
       
