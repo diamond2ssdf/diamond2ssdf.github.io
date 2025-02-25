@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="John Doe" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      logging实践 
+      
+      
+      |
+    
+     Hexo
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">旌齊的博客小屋</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">概览</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">文件</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">logging实践</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-02-25 21:01:28
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Python/" title="Python">
+                    <b>#</b> Python
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E6%97%A5%E5%BF%97/" title="日志">
+                    #日志
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E5%B7%A5%E7%A8%8B%E6%94%B9%E9%80%A0/" title="工程改造">
+                    #工程改造
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-基础概念"><a href="#1-基础概念" class="headerlink" title="1. 基础概念"></a>1. 基础概念</h2><h3 id="1-1-logging-模块的作用"><a href="#1-1-logging-模块的作用" class="headerlink" title="1.1 logging 模块的作用"></a>1.1 <code>logging</code> 模块的作用</h3><p><code>logging</code> 模块用于为应用程序提供灵活的日志记录功能；</p>
+<p>特点：通过threading locks 实现thread-safe，提到了threading lock 不全是可重入的*（TODO锁）*</p>
+<h3 id="1-2-logging-的基本组件"><a href="#1-2-logging-的基本组件" class="headerlink" title="1.2 logging 的基本组件"></a>1.2 <code>logging</code> 的基本组件</h3><ul>
+<li><strong>Logger</strong>: 负责记录日志消息，通常在应用程序的不同部分使用不同的 Logger 对象来进行日志记录。</li>
+<li><strong>Handler</strong>: 负责将日志消息输出到指定的目标。常见的 Handler 包括 <code>StreamHandler</code>、<code>FileHandler</code> 等。<ul>
+<li><code>FileHandler</code> 将消息发送到磁盘文件</li>
+<li><code>StreamHandler </code>消息发送到流</li>
+<li><code>RotatingFileHandler</code> 发送到磁盘文件，支持最大日志文件大小和日志文件旋转</li>
+</ul>
+</li>
+<li><strong>Formatter</strong>: 负责格式化日志消息，定义了日志的输出格式<ul>
+<li>时间%(asctime)s、函数名%(funcName)s、日志信息%(message)s等</li>
+</ul>
+</li>
+<li><strong>Filter</strong>: 用于在日志处理过程中筛选特定的日志记录。它可以限制哪些日志消息应该被处理或者输出。</li>
+</ul>
+<ol>
+<li><code>Logger</code> 以<code>Formatter</code>的形式生成一条<code>Record</code></li>
+<li><code>Filter</code> 在消息被输出之前筛选。</li>
+<li><code>Handler</code> 通过不同的输出方式处理这些日志消息。</li>
+</ol>
+<h3 id="1-3-logging-的五个日志级别"><a href="#1-3-logging-的五个日志级别" class="headerlink" title="1.3 logging 的五个日志级别"></a>1.3 <code>logging</code> 的五个日志级别</h3><p>Python <code>logging</code> 模块提供了五个标准的日志级别，它们用于表示日志消息的重要性和紧急性：</p>
+<ul>
+<li><strong>DEBUG</strong>: 用于输出详细的调试信息，通常仅在开发过程中使用。</li>
+<li><strong>INFO</strong>: 用于输出常规的运行信息，标志程序的正常执行。</li>
+<li><strong>WARNING</strong>: 用于输出警告信息，标志某些不影响程序运行的问题。</li>
+<li><strong>ERROR</strong>: 用于输出错误信息，通常表示某些功能失败。</li>
+<li><strong>CRITICAL</strong>: 用于输出严重错误信息，通常表示程序无法继续运行。</li>
+</ul>
+<p>每个日志级别都可以输出该级别及更高级别的日志。例如，设置为 <code>WARNING</code> 级别时，将同时输出 <code>WARNING</code>、<code>ERROR</code> 和 <code>CRITICAL</code> 级别的日志。</p>
+<hr>
+<h2 id="2-基本用法"><a href="#2-基本用法" class="headerlink" title="2. 基本用法"></a>2. 基本用法</h2><h3 id="2-1-Logger"><a href="#2-1-Logger" class="headerlink" title="2.1 Logger"></a>2.1 Logger</h3><p><code>Logger</code> 是日志系统的核心组件，用于记录日志消息。每个 <code>Logger</code> 都有一个名称，并且可以通过层级关系继承父级 <code>Logger</code> 的配置。<code>Logger</code> 的主要功能包括：</p>
+<ul>
+<li>设置日志级别（如 <code>DEBUG</code>、<code>INFO</code>、<code>WARNING</code> 等）。</li>
+<li>添加一个或多个 <code>Handler</code>，用于将日志消息输出到不同的目标。</li>
+<li>可以通过 <code>extra</code> 参数传递自定义字段。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个 Logger</span></span><br><span class="line">logger = logging.getLogger(<span class="string">&quot;example&quot;</span>)</span><br><span class="line">logger.setLevel(logging.DEBUG)  <span class="comment"># 设置日志级别</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加一个 Handler（如 StreamHandler）</span></span><br><span class="line">handler = logging.StreamHandler()</span><br><span class="line">logger.addHandler(handler)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试日志</span></span><br><span class="line">logger.debug(<span class="string">&quot;This is a debug message&quot;</span>)</span><br><span class="line">logger.info(<span class="string">&quot;This is an info message&quot;</span>)</span><br><span class="line">logger.warning(<span class="string">&quot;This is a warning message&quot;</span>)</span><br><span class="line">logger.error(<span class="string">&quot;This is an error message&quot;</span>)</span><br><span class="line">logger.critical(<span class="string">&quot;This is a critical message&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-Handler"><a href="#2-2-Handler" class="headerlink" title="2.2 Handler"></a>2.2 Handler</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from logging.handlers import RotatingFileHandler</span><br><span class="line"></span><br><span class="line"># 创建一个 RotatingFileHandler</span><br><span class="line">file_handler = RotatingFileHandler(</span><br><span class="line">    &quot;example.log&quot;, maxBytes=1024 * 1024 * 5, backupCount=5</span><br><span class="line">)</span><br><span class="line">logger.addHandler(file_handler)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-Formater"><a href="#2-3-Formater" class="headerlink" title="2.3 Formater"></a>2.3 Formater</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import logging</span><br><span class="line"></span><br><span class="line">formatter = logging.Formatter(</span><br><span class="line">    fmt=&quot;%(asctime)s - %(levelname)s - %(name)s - %(funcName)s - %(message)s&quot;,</span><br><span class="line">    datefmt=&quot;%Y-%m-%d %H:%M:%S&quot;</span><br><span class="line">)</span><br><span class="line">handler.setFormatter(formatter)</span><br></pre></td></tr></table></figure>
+
+<p>自定义字段进行传参</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import logging</span><br><span class="line"></span><br><span class="line"># 创建一个 Formatter，包含自定义字段</span><br><span class="line">formatter = logging.Formatter(</span><br><span class="line">    fmt=&quot;%(asctime)s - %(levelname)s - %(name)s - %(funcName)s - %(custom_field)s - %(message)s&quot;,</span><br><span class="line">    datefmt=&quot;%Y-%m-%d %H:%M:%S&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># 创建一个 Logger</span><br><span class="line">logger = logging.getLogger(&quot;example&quot;)</span><br><span class="line">logger.setLevel(logging.DEBUG)</span><br><span class="line"></span><br><span class="line"># 定义一个函数，用于生成日志</span><br><span class="line">def log_something():</span><br><span class="line">    # 使用 extra 参数传递自定义字段</span><br><span class="line">    extra_data = &#123;&quot;custom_field&quot;: &quot;This is a custom field&quot;&#125;</span><br><span class="line">    logger.info(&quot;This is an info message&quot;, extra=extra_data)</span><br><span class="line"></span><br><span class="line">log_something()</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-Filter"><a href="#2-4-Filter" class="headerlink" title="2.4 Filter"></a>2.4 Filter</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import logging</span><br><span class="line"></span><br><span class="line">class LevelFilter(logging.Filter):</span><br><span class="line">    def __init__(self, level):</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.level = level</span><br><span class="line"></span><br><span class="line">    def filter(self, record):</span><br><span class="line">        return record.levelno == self.level</span><br><span class="line"></span><br><span class="line">info_filter = LevelFilter(logging.INFO)</span><br><span class="line">handler.addFilter(info_filter)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-实践场景：gunicorn部署的Flask应用使用logging"><a href="#3-实践场景：gunicorn部署的Flask应用使用logging" class="headerlink" title="3. 实践场景：gunicorn部署的Flask应用使用logging"></a>3. 实践场景：gunicorn部署的Flask应用使用logging</h2><p>需求：</p>
+<ol>
+<li>gunicorn部署，多进程写入同一个文件而非创建不同文件</li>
+<li>日志自动翻转，翻转后的日志采取日期命名，支持滚动删除</li>
+<li>日志记录funcName与request_id</li>
+</ol>
+<p>多进程日志库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install ConcurrentLogHandler==0.9.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-重写handler"><a href="#3-1-重写handler" class="headerlink" title="3.1 重写handler"></a>3.1 重写handler</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import re</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">from concurrent_log_handler import ConcurrentRotatingFileHandler</span><br><span class="line">from typing import List</span><br><span class="line"></span><br><span class="line">class CustomConcurrentRotatingFileHandler(ConcurrentRotatingFileHandler):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    自定义日志处理器，继承 ConcurrentRotatingFileHandler，</span><br><span class="line">    增加自动命名日志文件及清理旧日志文件的功能。</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def __init__(self, *args, **kwargs):</span><br><span class="line">        super().__init__(*args, **kwargs)  # 直接继承父类的所有参数</span><br><span class="line">        self.dir_folder = os.path.dirname(self.baseFilename)</span><br><span class="line">        self.default_filename = os.path.splitext(os.path.basename(self.baseFilename))[0]</span><br><span class="line">        self.back_up_file_format = f&quot;&#123;self.default_filename&#125;-*.log&quot;</span><br><span class="line"></span><br><span class="line">    def doRollover(self):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        执行日志轮转，将当前日志文件重命名为带有时间戳的新文件，</span><br><span class="line">        并删除超出 backupCount 限制的最旧备份文件。</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        if self.stream:</span><br><span class="line">            self.stream.close()</span><br><span class="line">            self.stream = None</span><br><span class="line"></span><br><span class="line">        # 生成新的备份日志文件名：/folder/OnlineServer-YYYYMMDD_HHMMSS.log</span><br><span class="line">        current_time = time.strftime(&quot;%Y%m%d_%H%M%S&quot;)</span><br><span class="line">        dfn = self.rotation_filename(os.path.join(self.dir_folder, f&quot;&#123;self.default_filename&#125;-&#123;current_time&#125;.log&quot;))</span><br><span class="line"></span><br><span class="line">        if os.path.exists(dfn):</span><br><span class="line">            os.remove(dfn)</span><br><span class="line">        self.rotate(self.baseFilename, dfn)</span><br><span class="line"></span><br><span class="line">        if not self.delay:</span><br><span class="line">            self.stream = self._open()</span><br><span class="line"></span><br><span class="line">        # 清理旧日志文件</span><br><span class="line">        if self.backupCount &gt; 0:</span><br><span class="line">            for file in self.getFilesToDelete():</span><br><span class="line">                os.remove(file)</span><br><span class="line"></span><br><span class="line">    def getFilesToDelete(self) -&gt; List[str]:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        获取需要删除的旧日志文件</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        log_files = [f for f in os.listdir(self.dir_folder) if re.match(self.back_up_file_format.replace(&#x27;*&#x27;, &#x27;.*&#x27;), f)]</span><br><span class="line">        log_files = [os.path.join(self.dir_folder, f) for f in log_files]</span><br><span class="line"></span><br><span class="line">        if len(log_files) &lt;= self.backupCount:</span><br><span class="line">            return []</span><br><span class="line"></span><br><span class="line">        log_files.sort()</span><br><span class="line">        return log_files[: len(log_files) - self.backupCount]</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-使用logger"><a href="#3-2-使用logger" class="headerlink" title="3.2 使用logger"></a>3.2 使用logger</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">import logging</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">from flask import g, has_request_context</span><br><span class="line">from kernel.logging.handler import CustomConcurrentRotatingFileHandler</span><br><span class="line">from config.consts import LOG_BASE_DIR, LOG_BASE_NAME, LOG_FILE_SIZE, LOG_BACK_UP_NUM, LOG_MYSQL_NAME, LOG_REDIS_NAME, \</span><br><span class="line">    LOG_NOS_NAME, LOG_SPLIT_NAME</span><br><span class="line"></span><br><span class="line"># 文件单例，多进程共用一个logger</span><br><span class="line">os.makedirs(LOG_BASE_DIR, exist_ok=True)</span><br><span class="line">logger = logging.getLogger(&#x27;logger&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 自定义 Filter 来添加 request_id, 用于追踪与request_id相关的日志条目</span><br><span class="line">class RequestIDFilter(logging.Filter):</span><br><span class="line">    def filter(self, record):</span><br><span class="line">        if has_request_context():</span><br><span class="line">            # 在请求上下文中安全获取 request_id</span><br><span class="line">            record.request_id = getattr(g, &#x27;request_id&#x27;, &#x27;no-request-id&#x27;)</span><br><span class="line">        else:</span><br><span class="line">            # 如果没有请求上下文，尝试从日志记录的 extra 参数中获取 request_id</span><br><span class="line">            # 假设在记录日志时通过 extra=&#123;&#x27;request_id&#x27;: &#x27;some-id&#x27;&#125; 传递了 request_id</span><br><span class="line">            record.request_id = getattr(record, &#x27;request_id&#x27;, &#x27;non-request-id&#x27;)</span><br><span class="line">        return True</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def setup_loggers():</span><br><span class="line">    # logger使用自定义日志处理器，将日志写入 .log 文件中，</span><br><span class="line">    # 当文件达到 LOG_FILE_SIZE MB 时进行轮转，最多保留 K 个备份</span><br><span class="line">    log_handler = CustomConcurrentRotatingFileHandler(</span><br><span class="line">        os.path.join(LOG_BASE_DIR, LOG_BASE_NAME), &quot;a&quot;,</span><br><span class="line">        LOG_FILE_SIZE * 1024 * 1024, LOG_BACK_UP_NUM, encoding=&#x27;utf-8&#x27;)</span><br><span class="line">    log_formatter = logging.Formatter(</span><br><span class="line">        f&#x27;%(asctime)s - %(name)s - %(levelname)s - %(request_id)s - %(funcName)s - %(message)s&#x27;)</span><br><span class="line">    log_handler.setFormatter(log_formatter)</span><br><span class="line">    logger.addHandler(log_handler)</span><br><span class="line">    logger.setLevel(logging.INFO)</span><br><span class="line">    logger.addFilter(RequestIDFilter())</span><br><span class="line">    logger.propagate = False</span><br><span class="line"></span><br><span class="line">setup_loggers()</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/logging.html">logging — Logging facility for Python — Python 3.13.2 documentation</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.python.org/3/howto/logging.html#logging-advanced-tutorial">https://docs.python.org/3/howto/logging.html#logging-advanced-tutorial</a></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/02/10/hexo%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <!-- <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-02-25 21:01:28
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Python/" title="Python">
+                        <b>#</b> Python
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E6%97%A5%E5%BF%97/" title="日志">
+                        #日志
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E5%B7%A5%E7%A8%8B%E6%94%B9%E9%80%A0/" title="工程改造">
+                        #工程改造
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div> -->
+          <div class="post-foot-prev">
+            
+              <a href="/2025/02/16/python%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-text">1. 基础概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-logging-%E6%A8%A1%E5%9D%97%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">1.1 logging 模块的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-logging-%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%84%E4%BB%B6"><span class="toc-text">1.2 logging 的基本组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-logging-%E7%9A%84%E4%BA%94%E4%B8%AA%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB"><span class="toc-text">1.3 logging 的五个日志级别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-text">2. 基本用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Logger"><span class="toc-text">2.1 Logger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Handler"><span class="toc-text">2.2 Handler</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Formater"><span class="toc-text">2.3 Formater</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Filter"><span class="toc-text">2.4 Filter</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%AE%9E%E8%B7%B5%E5%9C%BA%E6%99%AF%EF%BC%9Agunicorn%E9%83%A8%E7%BD%B2%E7%9A%84Flask%E5%BA%94%E7%94%A8%E4%BD%BF%E7%94%A8logging"><span class="toc-text">3. 实践场景：gunicorn部署的Flask应用使用logging</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E9%87%8D%E5%86%99handler"><span class="toc-text">3.1 重写handler</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E4%BD%BF%E7%94%A8logger"><span class="toc-text">3.2 使用logger</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/diamond2ssdf">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+        <li>
+          
+            <a title="email" href="mailto:1987791731@qq.com">
+              <i class="iconfont icon-envelope"></i>
+            </a>
+            
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        ©2025.02-2025.02
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + logging%E5%AE%9E%E8%B7%B5 + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F02%2F11%2Flogging%25E6%25A8%25A1%25E5%259D%2597%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/02/11/logging%E6%A8%A1%E5%9D%97/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
