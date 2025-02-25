@@ -13,7 +13,7 @@
   
   <title>
     
-      archive_a: 2025 
+      MySQL 
       
       
       |
@@ -104,68 +104,145 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
 
-<div class="container archives">
-  <div class="post-list">
-    
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2025</span>
-          </h2>
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">MySQL</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-02-25 21:54:39
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/" title="默认分类">
+                    <b>#</b> 默认分类
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E9%BB%98%E8%AE%A4%E6%A0%87%E7%AD%BE/" title="默认标签">
+                    #默认标签
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/02/19/%E5%B9%B6%E5%8F%91%E7%90%86%E8%AE%BA%E4%B8%8E%E5%AE%9E%E8%B7%B5-Python/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <!-- <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-02-25 21:54:39
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/" title="默认分类">
+                        <b>#</b> 默认分类
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E9%BB%98%E8%AE%A4%E6%A0%87%E7%AD%BE/" title="默认标签">
+                        #默认标签
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div> -->
+          <div class="post-foot-prev">
+            
+          </div>
         </div>
       
-      <div class="post-item" title="MySQL">
-        <div class="time-m-d">02-25</div>
-        <div class="title">
-          <a href="/2025/02/25/MySQL/">
-            <span>MySQL</span>
-          </a>
-        </div>
-      </div>
+    </div>
     
-      <div class="post-item" title="并发理论与实践[Python]">
-        <div class="time-m-d">02-19</div>
-        <div class="title">
-          <a href="/2025/02/19/%E5%B9%B6%E5%8F%91%E7%90%86%E8%AE%BA%E4%B8%8E%E5%AE%9E%E8%B7%B5-Python/">
-            <span>并发理论与实践[Python]</span>
-          </a>
-        </div>
-      </div>
+
     
-      <div class="post-item" title="Python高级语法">
-        <div class="time-m-d">02-16</div>
-        <div class="title">
-          <a href="/2025/02/16/python%E9%AB%98%E7%BA%A7%E8%AF%AD%E6%B3%95/">
-            <span>Python高级语法</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="logging实践">
-        <div class="time-m-d">02-11</div>
-        <div class="title">
-          <a href="/2025/02/11/logging%E6%A8%A1%E5%9D%97/">
-            <span>logging实践</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="hexo基础用法">
-        <div class="time-m-d">02-10</div>
-        <div class="title">
-          <a href="/2025/02/10/hexo%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95/">
-            <span>hexo基础用法</span>
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         
 <div class="footer">
@@ -423,6 +500,24 @@
 
 
         
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + MySQL + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F02%2F25%2FMySQL%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/02/25/MySQL/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
   
   
 <script src="/js/shares.js"></script>

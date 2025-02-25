@@ -153,7 +153,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-02-25 21:30:24
+          2025-02-25 21:54:11
         </span>
         
               <span class="post-categories">
@@ -236,21 +236,24 @@
 
 <h2 id="4-函数式编程-Functional-Programming"><a href="#4-函数式编程-Functional-Programming" class="headerlink" title="4. 函数式编程 (Functional Programming)"></a>4. 函数式编程 (Functional Programming)</h2><p>函数式编程的核心思想是将程序分解为一系列纯函数（pure functions），并通过函数组合来实现复杂的逻辑。Python支持函数式编程特性，如 <code>map</code>、<code>filter</code>、<code>reduce</code> 和匿名函数（<code>lambda</code>）。</p>
 <h3 id="4-1-lambda"><a href="#4-1-lambda" class="headerlink" title="4.1 lambda"></a>4.1 lambda</h3><p>创建匿名函数，通常用于简化代码。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lambda arguments: expression</span><br></pre></td></tr></table></figure>
-
+<blockquote>
+<p> lambda arguments: expression</p>
+</blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 按字符串长度排序</span><br><span class="line">words = [&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;, &quot;date&quot;]</span><br><span class="line">sorted_words = sorted(words, key=lambda x: len(x))</span><br><span class="line">print(sorted_words)  # 输出: [&#x27;date&#x27;, &#x27;apple&#x27;, &#x27;cherry&#x27;, &#x27;banana&#x27;]</span><br></pre></td></tr></table></figure>
 
 <h3 id="4-2-map"><a href="#4-2-map" class="headerlink" title="4.2 map"></a>4.2 map</h3><p>将一个函数应用于一个或多个可迭代对象的所有元素，并返回一个<em><strong>惰性迭代器</strong></em>。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map(function, iterable, ...)</span><br></pre></td></tr></table></figure>
-
+<blockquote>
+<p>map(function, iterable, …)</p>
+</blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">numbers = [1, 2, 3, 4, 5]</span><br><span class="line">squared = map(lambda x: x**2, numbers)</span><br><span class="line">print(squared)</span><br><span class="line"></span><br><span class="line">&lt;map object at 0x0000023BEF4E5910&gt;</span><br></pre></td></tr></table></figure>
 
 <h3 id="4-3-reduce"><a href="#4-3-reduce" class="headerlink" title="4.3 reduce"></a>4.3 reduce</h3><p><code>reduce</code> 用于将一个二元函数（接受两个参数的函数）累积地应用于一个可迭代对象的所有元素，从而将整个序列“折叠”成一个单一的结果。</p>
 <blockquote>
-<p>在 Python 3 中，<code>reduce</code> 不再是内置函数，而是被移到了 <code>functools</code> 模块中。因此，使用 <code>reduce</code> 时需要先导入 <code>functools</code> 模块。</p>
+<p>在 Python 3 中，<code>reduce</code>不再是内置函数，而是被移到了 <code>functools</code> 模块中。因此，使用 <code>reduce</code> 时需要先导入 <code>functools</code> 模块。</p>
 </blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reduce(function, iterable[, initializer])</span><br></pre></td></tr></table></figure>
-
+<blockquote>
+<p> reduce(function, iterable[, initializer])</p>
+</blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from functools import reduce</span><br><span class="line"></span><br><span class="line">numbers = [1, 2, 3, 4, 5]</span><br><span class="line">result = reduce(lambda x, y: x + y, numbers)</span><br><span class="line">print(result)  </span><br><span class="line"></span><br><span class="line">15</span><br></pre></td></tr></table></figure>
 
 <h3 id="4-4-filter"><a href="#4-4-filter" class="headerlink" title="4.4 filter"></a>4.4 filter</h3><p>用于从可迭代对象中筛选出满足特定条件的元素。</p>
@@ -278,7 +281,7 @@
           <!-- <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-02-25 21:30:24
+              2025-02-25 21:54:11
             </span>
             
                   <span class="post-categories">
