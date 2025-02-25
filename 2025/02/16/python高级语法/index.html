@@ -153,7 +153,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-02-25 21:54:11
+          2025-02-25 23:05:17
         </span>
         
               <span class="post-categories">
@@ -257,7 +257,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from functools import reduce</span><br><span class="line"></span><br><span class="line">numbers = [1, 2, 3, 4, 5]</span><br><span class="line">result = reduce(lambda x, y: x + y, numbers)</span><br><span class="line">print(result)  </span><br><span class="line"></span><br><span class="line">15</span><br></pre></td></tr></table></figure>
 
 <h3 id="4-4-filter"><a href="#4-4-filter" class="headerlink" title="4.4 filter"></a>4.4 filter</h3><p>用于从可迭代对象中筛选出满足特定条件的元素。</p>
-<p>工作原理是将一个布尔函数应用于可迭代对象的每个元素，然后返回一<strong>个惰性迭代器</strong>，其中包含所有使布尔函数返回 <code>True</code> 的元素。</p>
+<p>工作原理是将一个布尔函数应用于可迭代对象的每个元素，然后返回一个<em><strong>惰性迭代器</strong></em>，其中包含所有使布尔函数返回 <code>True</code> 的元素。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">numbers = [1, 2, 3, 4, 5]</span><br><span class="line">result = filter(lambda x: x &amp; 1 == 0, numbers)</span><br><span class="line">print(result)</span><br><span class="line">print(list(result))</span><br><span class="line"></span><br><span class="line">&lt;filter object at 0x00000121065F5910&gt;</span><br><span class="line">[2, 4]</span><br></pre></td></tr></table></figure>
 
 <h2 id="5-解包"><a href="#5-解包" class="headerlink" title="5. 解包"></a>5. 解包</h2><p>解包（Unpacking）是一种非常强大且灵活的特性，将可迭代对象（如列表、元组、字典等）中的元素分配给多个变量</p>
@@ -281,7 +281,7 @@
           <!-- <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-02-25 21:54:11
+              2025-02-25 23:05:17
             </span>
             
                   <span class="post-categories">
