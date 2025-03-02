@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="John Doe" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      数据结构[Python版] 
+      
+      
+      |
+    
+     Hexo
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">旌齊的博客小屋</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">概览</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">文件</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">数据结构[Python版]</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-03-02 12:21:38
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E5%9F%BA%E7%A1%80%E4%B8%8D%E7%89%A2%EF%BC%8C%E5%9C%B0%E5%8A%A8%E5%B1%B1%E6%91%87/" title="基础不牢，地动山摇">
+                    <b>#</b> 基础不牢，地动山摇
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/Python/" title="Python">
+                    #Python
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">
+                    #数据结构
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-双向链表"><a href="#1-双向链表" class="headerlink" title="1. 双向链表"></a>1. 双向链表</h2><ul>
+<li>双向遍历</li>
+<li>插入&#x2F;删除操作高效</li>
+</ul>
+<p>插入时间复杂度O(1)，给定Node删除时间复杂度为O(1)，查询复杂度O(n)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">class Node:</span><br><span class="line">    def __init__(self, value=None):</span><br><span class="line">        self.value = value</span><br><span class="line">        self.prev = None</span><br><span class="line">        self.next = None</span><br><span class="line"></span><br><span class="line">class DoublyLinkedList:</span><br><span class="line">    def __init__(self):</span><br><span class="line">        # 初始化头尾虚拟节点并互连</span><br><span class="line">        self.dummy_head = Node()  </span><br><span class="line">        self.dummy_tail = Node()  </span><br><span class="line">        self.dummy_head.next = self.dummy_tail</span><br><span class="line">        self.dummy_tail.prev = self.dummy_head</span><br><span class="line">        self.size = 0  # 实际节点数量，不计虚拟节点</span><br><span class="line"></span><br><span class="line">    def _insert_between(self, prev_node, next_node, value):</span><br><span class="line">        &quot;&quot;&quot;在prev_node和next_node之间插入新节点&quot;&quot;&quot;</span><br><span class="line">        new_node = Node(value)</span><br><span class="line">        new_node.prev = prev_node</span><br><span class="line">        new_node.next = next_node</span><br><span class="line">        prev_node.next = new_node</span><br><span class="line">        next_node.prev = new_node</span><br><span class="line">        self.size += 1</span><br><span class="line">        return new_node</span><br><span class="line"></span><br><span class="line">    def append_left(self, value):</span><br><span class="line">        &quot;&quot;&quot;在链表头部插入（dummy_head后）&quot;&quot;&quot;</span><br><span class="line">        self._insert_between(self.dummy_head, self.dummy_head.next, value)</span><br><span class="line"></span><br><span class="line">    def append_right(self, value):</span><br><span class="line">        &quot;&quot;&quot;在链表尾部插入（dummy_tail前）&quot;&quot;&quot;</span><br><span class="line">        self._insert_between(self.dummy_tail.prev, self.dummy_tail, value)</span><br><span class="line"></span><br><span class="line">    def remove(self, value):</span><br><span class="line">        &quot;&quot;&quot;删除第一个匹配值的节点&quot;&quot;&quot;</span><br><span class="line">        current = self.dummy_head.next</span><br><span class="line">        while current != self.dummy_tail:</span><br><span class="line">            if current.value == value:</span><br><span class="line">                # 断开当前节点连接</span><br><span class="line">                current.prev.next = current.next</span><br><span class="line">                current.next.prev = current.prev</span><br><span class="line">                self.size -= 1</span><br><span class="line">                return True</span><br><span class="line">            current = current.next</span><br><span class="line">        return False</span><br><span class="line"></span><br><span class="line">    def __str__(self):</span><br><span class="line">        &quot;&quot;&quot;可视化链表结构&quot;&quot;&quot;</span><br><span class="line">        res = []</span><br><span class="line">        current = self.dummy_head.next</span><br><span class="line">        while current != self.dummy_tail:</span><br><span class="line">            res.append(str(current.value))</span><br><span class="line">            current = current.next</span><br><span class="line">        return &quot; &lt;-&gt; &quot;.join(res) if res else &quot;Empty List&quot;</span><br></pre></td></tr></table></figure>
+
+<p>例题：</p>
+<ul>
+<li>LRU缓存 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lru-cache/description/">146. LRU 缓存 - 力扣（LeetCode）</a></li>
+</ul>
+<h2 id="2-单调栈"><a href="#2-单调栈" class="headerlink" title="2. 单调栈"></a>2. 单调栈</h2><p>寻找下一个更大&#x2F;更小元素</p>
+<ul>
+<li>构造一个递减栈，如果当前元素大于stk[-1]， 弹出栈顶，用于寻找下一个更大的元素</li>
+<li>构造一个递增栈，如果当前元素小于stk[-1]， 弹出栈顶，用于寻找下一个更小的元素</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 递减单调栈</span><br><span class="line">def next_greater_element(nums):</span><br><span class="line">    stack = []</span><br><span class="line">    result = [-1] * len(nums)</span><br><span class="line">    for i in range(len(nums)):</span><br><span class="line">        while stack and nums[i] &gt; nums[stack[-1]]:</span><br><span class="line">            idx = stack.pop()</span><br><span class="line">            result[idx] = nums[i]</span><br><span class="line">        stack.append(i)</span><br><span class="line">    return result</span><br></pre></td></tr></table></figure>
+
+<p><strong>例题</strong>：</p>
+<ul>
+<li>每日温度问题 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/daily-temperatures/description/">739. 每日温度 - 力扣（LeetCode）</a></li>
+<li>柱状图最大矩形 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/largest-rectangle-in-histogram/description/">84. 柱状图中最大的矩形 - 力扣（LeetCode）</a></li>
+</ul>
+<h2 id="3-单调队列"><a href="#3-单调队列" class="headerlink" title="3. 单调队列"></a>3. 单调队列</h2><p>O(1)获得滑动窗口最值</p>
+<p>以滑动窗口最大值为例：</p>
+<ul>
+<li>“又老又小”的值是没用的，维护一个递减队列</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">from collections import deque</span><br><span class="line"></span><br><span class="line">class MonotonicQueue:</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.q = deque()</span><br><span class="line">    </span><br><span class="line">    def push(self, n):</span><br><span class="line">        while self.q and self.q[-1] &lt; n:</span><br><span class="line">            self.q.pop()</span><br><span class="line">        self.q.append(n)</span><br><span class="line">    </span><br><span class="line">    def max(self):</span><br><span class="line">        return self.q[0]</span><br><span class="line">    </span><br><span class="line">    def pop(self, n):</span><br><span class="line">        if self.q[0] == n:</span><br><span class="line">            self.q.popleft()</span><br><span class="line"></span><br><span class="line"># 滑动窗口最大值示例</span><br><span class="line">def max_sliding_window(nums, k):</span><br><span class="line">    window = MonotonicQueue()</span><br><span class="line">    res = []</span><br><span class="line">    for i in range(len(nums)):</span><br><span class="line">        if i &lt; k-1:</span><br><span class="line">            window.push(nums[i])</span><br><span class="line">        else:</span><br><span class="line">            window.push(nums[i])</span><br><span class="line">            res.append(window.max())</span><br><span class="line">            window.pop(nums[i-k+1])</span><br><span class="line">    return res</span><br></pre></td></tr></table></figure>
+
+<p><strong>例题</strong>：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sliding-window-maximum/description/?envType=problem-list-v2&envId=monotonic-queue">239. 滑动窗口最大值 - 力扣（LeetCode）</a></li>
+</ul>
+<h2 id="4-树"><a href="#4-树" class="headerlink" title="4 树"></a>4 树</h2><h3 id="4-1-二叉搜索树"><a href="#4-1-二叉搜索树" class="headerlink" title="4.1 二叉搜索树"></a>4.1 二叉搜索树</h3><p>在最优情况下（树接近完全二叉树），插入、删除和查找操作的时间复杂度为O(log n)</p>
+<ul>
+<li><p>节点排序性质</p>
+<ul>
+<li><p>若左子树不为空，则左子树上所有节点的值都小于根节点的值。</p>
+</li>
+<li><p>若右子树不为空，则右子树上所有节点的值都大于根节点的值。</p>
+</li>
+<li><p>左右子树也必须是二叉搜索树</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>对二叉搜索树进行中序遍历（左-根-右），得到的节点值序列是单调递增的</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class TreeNode:</span><br><span class="line">    def __init__(self, val):</span><br><span class="line">        self.val = val</span><br><span class="line">        self.left = None</span><br><span class="line">        self.right = None</span><br><span class="line"></span><br><span class="line">class BST:</span><br><span class="line">    def insert(self, root, val):</span><br><span class="line">        if not root:</span><br><span class="line">            return TreeNode(val)</span><br><span class="line">        if val &lt; root.val:</span><br><span class="line">            root.left = self.insert(root.left, val)</span><br><span class="line">        else:</span><br><span class="line">            root.right = self.insert(root.right, val)</span><br><span class="line">        return root</span><br><span class="line">    </span><br><span class="line">    def search(self, root, val):</span><br><span class="line">        if not root:</span><br><span class="line">            return False</span><br><span class="line">        if root.val == val:</span><br><span class="line">            return True</span><br><span class="line">        elif val &lt; root.val:</span><br><span class="line">            return self.search(root.left, val)</span><br><span class="line">        else:</span><br><span class="line">            return self.search(root.right, val)</span><br></pre></td></tr></table></figure>
+
+<p><strong>例题</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/validate-binary-search-tree/description/">98. 验证二叉搜索树 - 力扣（LeetCode）</a></li>
+<li><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/delete-node-in-a-bst/description/">450. 删除二叉搜索树中的节点 - 力扣（LeetCode）</a></li>
+</ul>
+<h3 id="4-2-前缀树"><a href="#4-2-前缀树" class="headerlink" title="4.2 前缀树"></a>4.2 前缀树</h3><ul>
+<li><p>用于高效存储和检索字符串集合中的键。</p>
+</li>
+<li><p>它的每个节点代表一个字符，从根节点到某一节点的路径表示一个字符串</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class TrieNode:</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.children = &#123;&#125;</span><br><span class="line">        self.is_end = False</span><br><span class="line"></span><br><span class="line">class Trie:</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.root = TrieNode()</span><br><span class="line">    </span><br><span class="line">    def insert(self, word):</span><br><span class="line">        node = self.root</span><br><span class="line">        for char in word:</span><br><span class="line">            if char not in node.children:</span><br><span class="line">                node.children[char] = TrieNode()</span><br><span class="line">            node = node.children[char]</span><br><span class="line">        node.is_end = True</span><br><span class="line">    </span><br><span class="line">    def search(self, word):</span><br><span class="line">        node = self.root</span><br><span class="line">        for char in word:</span><br><span class="line">            if char not in node.children:</span><br><span class="line">                return False</span><br><span class="line">            node = node.children[char]</span><br><span class="line">        return node.is_end</span><br></pre></td></tr></table></figure>
+
+<p><strong>例题</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/implement-trie-prefix-tree/description/?envType=study-plan-v2&envId=leetcode-75">208. 实现 Trie (前缀树) - 力扣（LeetCode）</a></li>
+<li><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/design-add-and-search-words-data-structure/description/">211. 添加与搜索单词 - 数据结构设计 - 力扣（LeetCode）</a></li>
+</ul>
+<h3 id="4-3-B-树"><a href="#4-3-B-树" class="headerlink" title="4.3 B+树"></a>4.3 B+树</h3><p><strong>特性</strong>：</p>
+<ul>
+<li>多路平衡搜索树</li>
+<li>所有数据存储在叶子节点</li>
+<li>叶子节点形成有序链表</li>
+</ul>
+<p><strong>应用</strong>：</p>
+<ul>
+<li>数据库索引</li>
+<li>文件系统</li>
+</ul>
+<h3 id="4-4-红黑树"><a href="#4-4-红黑树" class="headerlink" title="4.4 红黑树"></a>4.4 红黑树</h3><p><strong>特性</strong>：</p>
+<ol>
+<li>节点是红色或黑色</li>
+<li>根节点是黑色</li>
+<li>叶子节点（NIL）是黑色</li>
+<li>红色节点的子节点都是黑色</li>
+<li>任意路径黑节点数量相同</li>
+</ol>
+<p><strong>应用</strong>：</p>
+<ul>
+<li>Linux进程调度</li>
+</ul>
+<h2 id="5-堆"><a href="#5-堆" class="headerlink" title="5. 堆"></a>5. 堆</h2><p><strong>堆</strong>是一种特殊的完全二叉树结构，可以理解为一个公司,这个公司很公平,谁能力强谁就当老大,不存在弱的人当老大,老大手底下的人一定不会比他强，当我们只关心所有数据中的最大值或者最小值，存在多次获取最大值或者最小值，多次插入或删除数据时，就可以使用堆，</p>
+<p>满足以下性质：</p>
+<ul>
+<li><strong>最小堆</strong>：每个节点的值 ≤ 子节点的值</li>
+<li><strong>最大堆</strong>：每个节点的值 ≥ 子节点的值</li>
+</ul>
+<p><strong>核心特征</strong>：</p>
+<ul>
+<li>堆顶元素始终为极值（最小值或最大值）</li>
+<li>插入&#x2F;删除时间复杂度为 O(log n)</li>
+<li>完全二叉树结构（可用数组高效存储）</li>
+</ul>
+<p><strong>手码最小堆</strong></p>
+<ul>
+<li><strong>插入</strong>：将一个新元素插入堆中，同时保持堆的性质。<ul>
+<li>放入列表尾部</li>
+<li>上浮</li>
+</ul>
+</li>
+<li><strong>删除</strong>：移除并返回堆顶元素<ul>
+<li>最后一个值放到堆顶</li>
+<li>下沉</li>
+</ul>
+</li>
+</ul>
+<p><strong>heapq实现堆</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import heapq</span><br><span class="line"></span><br><span class="line"># 最小堆</span><br><span class="line">heap = []</span><br><span class="line">heapq.heappush(heap, 3)</span><br><span class="line">heapq.heappop(heap)</span><br><span class="line"></span><br><span class="line"># 最大堆实现</span><br><span class="line">nums = [3, 1, 4]</span><br><span class="line">heapq.heapify([-x for x in nums])</span><br><span class="line">max_val = -heapq.heappop(nums)</span><br></pre></td></tr></table></figure>
+
+<p><strong>例题</strong></p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/top-k-frequent-elements/description/">347. 前 K 个高频元素 - 力扣（LeetCode）</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-median-from-data-stream/description/">295. 数据流的中位数 - 力扣（LeetCode）</a></p>
+</li>
+</ul>
+<h2 id="6-图"><a href="#6-图" class="headerlink" title="6. 图"></a>6. 图</h2><h3 id="6-1-邻接表"><a href="#6-1-邻接表" class="headerlink" title="6.1 邻接表"></a>6.1 邻接表</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 邻接表表示法</span><br><span class="line">graph = &#123;</span><br><span class="line">    &#x27;A&#x27;: [&#x27;B&#x27;, &#x27;C&#x27;],</span><br><span class="line">    &#x27;B&#x27;: [&#x27;D&#x27;],</span><br><span class="line">    &#x27;C&#x27;: [&#x27;E&#x27;],</span><br><span class="line">    &#x27;D&#x27;: [],</span><br><span class="line">    &#x27;E&#x27;: []</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># DFS遍历</span><br><span class="line">def dfs(graph, node, visited):</span><br><span class="line">    if node not in visited:</span><br><span class="line">        print(node)</span><br><span class="line">        visited.add(node)</span><br><span class="line">        for neighbor in graph[node]:</span><br><span class="line">            dfs(graph, neighbor, visited)</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-并查集"><a href="#6-2-并查集" class="headerlink" title="6.2 并查集"></a>6.2 并查集</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class UnionFind:</span><br><span class="line">    def __init__(self, n):</span><br><span class="line">        self.parent = list(range(n))  # 初始化：每个节点的父节点是它自己</span><br><span class="line">        self.rank = [1] * n  # 初始化：每个集合的秩为 1</span><br><span class="line"></span><br><span class="line">    def find(self, x):</span><br><span class="line">        if self.parent[x] != x:</span><br><span class="line">            self.parent[x] = self.find(self.parent[x])  # 路径压缩</span><br><span class="line">        return self.parent[x]</span><br><span class="line"></span><br><span class="line">    def union(self, x, y):</span><br><span class="line">        root_x = self.find(x)</span><br><span class="line">        root_y = self.find(y)</span><br><span class="line">        if root_x != root_y:</span><br><span class="line">            if self.rank[root_x] &gt; self.rank[root_y]:</span><br><span class="line">                self.parent[root_y] = root_x</span><br><span class="line">            elif self.rank[root_x] &lt; self.rank[root_y]:</span><br><span class="line">                self.parent[root_x] = root_y</span><br><span class="line">            else:</span><br><span class="line">                self.parent[root_x] = root_y</span><br><span class="line">                self.rank[root_y] += 1</span><br><span class="line"></span><br><span class="line">    def is_connected(self, x, y):</span><br><span class="line">        return self.find(x) == self.find(y)</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-跳表"><a href="#7-跳表" class="headerlink" title="7. 跳表"></a>7. 跳表</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/design-skiplist/description/">1206. 设计跳表 - 力扣（LeetCode）</a></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/02/25/MySQL/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <!-- <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-03-02 12:21:38
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E5%9F%BA%E7%A1%80%E4%B8%8D%E7%89%A2%EF%BC%8C%E5%9C%B0%E5%8A%A8%E5%B1%B1%E6%91%87/" title="基础不牢，地动山摇">
+                        <b>#</b> 基础不牢，地动山摇
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/Python/" title="Python">
+                        #Python
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">
+                        #数据结构
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div> -->
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8"><span class="toc-text">1. 双向链表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%8D%95%E8%B0%83%E6%A0%88"><span class="toc-text">2. 单调栈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97"><span class="toc-text">3. 单调队列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%A0%91"><span class="toc-text">4 树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91"><span class="toc-text">4.1 二叉搜索树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E5%89%8D%E7%BC%80%E6%A0%91"><span class="toc-text">4.2 前缀树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-B-%E6%A0%91"><span class="toc-text">4.3 B+树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E7%BA%A2%E9%BB%91%E6%A0%91"><span class="toc-text">4.4 红黑树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%A0%86"><span class="toc-text">5. 堆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%9B%BE"><span class="toc-text">6. 图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E9%82%BB%E6%8E%A5%E8%A1%A8"><span class="toc-text">6.1 邻接表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E5%B9%B6%E6%9F%A5%E9%9B%86"><span class="toc-text">6.2 并查集</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E8%B7%B3%E8%A1%A8"><span class="toc-text">7. 跳表</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/diamond2ssdf">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+        <li>
+          
+            <a title="email" href="mailto:1987791731@qq.com">
+              <i class="iconfont icon-envelope"></i>
+            </a>
+            
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        ©2025.02-2025.03
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%5BPython%E7%89%88%5D + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F03%2F01%2F%25E6%2595%25B0%25E6%258D%25AE%25E7%25BB%2593%25E6%259E%2584-Python%25E7%2589%2588%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/03/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-Python%E7%89%88/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
